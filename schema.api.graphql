@@ -4,14 +4,14 @@ schema {
 }
 
 type Query {
-  getBook(input: GetBookInput): Book!
-  listBooks(input: ListBooksInput) : ListBooksResult
+  getBook(input: GetBookInput!): Book!
+  listBooks(input: ListBooksInput!) : ListBooksResult
 }
 
 type Mutation{
   createBook(input: CreateBookInput!): Book!
-  updateBook(input: UpdateBookInput): Book!
-  deleteBook(input: DeleteBookInput): Book!
+  updateBook(input: UpdateBookInput!): Book!
+  deleteBook(input: DeleteBookInput!): Book!
 }
 
 input GetBookInput{
@@ -44,6 +44,6 @@ type Book {
 }
 
 type ListBooksResult{
-  books: [!Book]!
+  books: [Book!]!
   nextToken: String
 }

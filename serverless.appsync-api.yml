@@ -1,2 +1,7 @@
 name: appsync-ts-crud
+authenticationType: AMAZON_COGNITO_USER_POOLS
 schema: schema.api.graphql
+userPoolConfig:
+  awsRegion: ap-southeast-2
+  defaultAction: ALLOW
+  userPoolId: !Ref CognitoUserPool
