@@ -3,8 +3,8 @@ frameworkVersion: '2'
 
 plugins:
   - serverless-appsync-plugin
-  - serverless-plugin-typescript
   - serverless-iam-roles-per-function
+  - serverless-esbuild
 
 
 provider:
