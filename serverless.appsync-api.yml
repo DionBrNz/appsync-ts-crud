@@ -1,0 +1,2 @@
+name: appsync-ts-crud
+schema: schema.api.graphql
