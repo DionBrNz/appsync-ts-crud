@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "sls": "sls",
+    "export-env": "sls export-env --all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,15 +17,22 @@
     "@aws-sdk/client-dynamodb": "^3.25.0",
     "@aws-sdk/lib-dynamodb": "^3.25.0",
     "@aws-sdk/util-dynamodb": "^3.25.0",
+    "env-var": "^7.0.1",
     "ulid": "2.3.0"
   },
   "devDependencies": {
     "@tsconfig/node14": "^1.0.1",
     "@types/aws-lambda": "^8.10.81",
     "@types/jest": "^26.0.24",
+    "dotenv": "^9.0.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2",
     "serverless": "2.43.1",
     "serverless-appsync-plugin": "^1.11.3",
     "serverless-esbuild": "^1.16.1",
+    "serverless-export-env": "1.4.4",
     "serverless-iam-roles-per-function": "^3.2.0",
     "ts-jest": "27.0.2",
     "ts-node": "10.0.0",
