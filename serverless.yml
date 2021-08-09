@@ -5,7 +5,7 @@ plugins:
   - serverless-appsync-plugin
   - serverless-iam-roles-per-function
   - serverless-esbuild
-
+  - serverless-export-env
 
 provider:
   name: aws
@@ -14,7 +14,7 @@ provider:
   region: ap-southeast-2
   environment:
     STAGE: ${self:custom.stage}
-    AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
 
 package:
   exclude:
@@ -39,7 +39,7 @@ functions:
       USERS_TABLE_NAME: !Ref UsersTable
     iamRoleStatements:
       - Effect: Allow
-        Action: "dynamodb:PutItem"
+        Action: 'dynamodb:PutItem'
         Resource: !GetAtt UsersTable.Arn
 
 resources:
@@ -102,5 +102,11 @@ resources:
         PreventUserExistenceErrors: ENABLED
 
   Outputs:
+    AwsRegion:
+      Value: ${self:custom.region}
     CognitoUserPoolId:
       Value: !Ref CognitoUserPool
+    WebUserPoolClientId:
+      Value: !Ref WebUserPoolClient
+    ApiUrl:
+      Value: !GetAtt AppsynctscrudGraphQlApi.GraphQLUrl

@@ -22,8 +22,8 @@ pnpm-debug.log*
 *.sln
 *.sw?
 *.map
-*.js
 *.zip
 
 .serverless
 .build
+.env
