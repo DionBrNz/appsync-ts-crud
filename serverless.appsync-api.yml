@@ -5,3 +5,16 @@ userPoolConfig:
   awsRegion: ap-southeast-2
   defaultAction: ALLOW
   userPoolId: !Ref CognitoUserPool
+
+mappingTemplates:
+  - type: Mutation
+    dataSource: createBookSource
+    field: createBook
+    request: false
+    response: response-mapping-template.vtl
+
+dataSources:
+  - type: AWS_LAMBDA
+    name: createBookSource
+    config:
+      functionName: createBook

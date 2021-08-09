@@ -42,6 +42,15 @@ functions:
         Action: 'dynamodb:PutItem'
         Resource: !GetAtt UsersTable.Arn
 
+  createBook:
+    handler: functions/confirm-user-signup.handler
+    environment:
+      BOOKS_TABLE_NAME: !Ref BooksTable
+    iamRoleStatements:
+      - Effect: Allow
+        Action: 'dynamodb:PutItem'
+        Resource: !GetAtt BooksTable.Arn
+
 resources:
   Resources:
     UsersTable:
@@ -59,6 +68,22 @@ resources:
             Value: ${self:custom.stage}
           - Key: Name
             Value: users-table
+    
+    BooksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        Tags:
+          - Key: Environment
+            Value: ${self:custom.stage}
+          - Key: Name
+            Value: books-table
 
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
