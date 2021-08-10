@@ -1,7 +1,7 @@
-import * as given from '../steps/given'
-import * as when from '../steps/when'
-import * as then from '../steps/then'
-import { User } from '../../lib/entities'
+import * as given from '../../steps/given'
+import * as when from '../../steps/when'
+import * as then from '../../steps/then'
+import { User } from '../../../lib/entities'
 
 describe('When a user signs up', () => {
   it('The user should be saved in dynamodb', async () => {
