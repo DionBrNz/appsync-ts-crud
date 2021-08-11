@@ -7,7 +7,8 @@
   "scripts": {
     "sls": "sls",
     "export-env": "sls export-env",
-    "e2e-test": "jest --verbose ./__tests__/e2e",
+    "e2e-test": "jest --verbose ./__tests__/test_cases/e2e",
+    "integration-test": "jest --verbose ./__tests__/test_cases/integration",
     "test": "jest --verbose"
   },
   "keywords": [],
