@@ -25,7 +25,10 @@ export async function handler(event: AppSyncEvent<CreateBookInput>, contex: Cont
     id: ulid(),
     title: title,
     description: description,
-    createdAt: now
+    createdAt: now,
+    updatedAt: now,
+    createdBy: event.identity.sub,
+    updatedBy: event.identity.sub
   }
 
   logger.info(book, 'Saving book')
@@ -36,7 +39,7 @@ export async function handler(event: AppSyncEvent<CreateBookInput>, contex: Cont
   })
 
   logger.info('Book saved')
-  
+
   return {
     data: book,
     errorInfo: null,

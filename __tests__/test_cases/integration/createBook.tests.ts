@@ -33,7 +33,10 @@ describe('Given an anuthenicated user', () => {
         id: bookId,
         title: title,
         description: description,
-        createdAt: expect.stringMatching(dateRegEx)
+        createdAt: expect.stringMatching(dateRegEx),
+        createdBy: user.id,
+        updatedAt: expect.stringMatching(dateRegEx),
+        updatedBy: user.id
       })
     })
   })

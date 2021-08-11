@@ -5,37 +5,41 @@ schema {
 
 type Query {
   getBook(input: GetBookInput!): Book!
-  listBooks(input: ListBooksInput!) : ListBooksResult
+  listBooks(input: ListBooksInput!): ListBooksResult
 }
 
-type Mutation{
+type Mutation {
   createBook(input: CreateBookInput!): Book!
   updateBook(input: UpdateBookInput!): Book!
   deleteBook(input: DeleteBookInput!): Book!
 }
 
-input GetBookInput{
+input GetBookInput {
   id: ID!
 }
- 
-input ListBooksInput{
+
+input ListBooksInput {
   limit: Int
   nextToken: String
 }
 
-input CreateBookInput{
+input CreateBookInput {
+  title: String!
+  description: String!
+  createdAt: AWSDateTime!
+  createdBy: ID!
+  updatedAt: AWSDateTime!
+  updatedBy: ID!
+}
+
+input UpdateBookInput {
+  id: ID!
   title: String!
   description: String!
 }
 
-input UpdateBookInput{
-  id : ID!
-  title: String!
-  description: String!
-}
-
-input DeleteBookInput{
-  id : ID!
+input DeleteBookInput {
+  id: ID!
 }
 
 type Book {
@@ -43,7 +47,7 @@ type Book {
   title: String!
 }
 
-type ListBooksResult{
+type ListBooksResult {
   books: [Book!]!
   nextToken: String
 }

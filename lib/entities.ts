@@ -9,4 +9,7 @@ export type Book = {
   title: string
   description: string
   createdAt: string
+  createdBy: string
+  updatedAt: string | null
+  updatedBy: string | null
 }
