@@ -43,7 +43,7 @@ functions:
         Resource: !GetAtt UsersTable.Arn
 
   createBook:
-    handler: functions/confirm-user-signup.handler
+    handler: functions/createBook.handler
     environment:
       BOOKS_TABLE_NAME: !Ref BooksTable
     iamRoleStatements:
