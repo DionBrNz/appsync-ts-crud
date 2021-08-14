@@ -42,7 +42,7 @@ export async function an_authenticated_user(): Promise<IAuthenticatedUser> {
     ClientId: WEB_USER_POOL_CLIENT_ID
   })
 
-  logger.info({ email, id }, 'User signed up')
+  logger.info({ email, id, password }, 'User signed up')
 
   await cognito.adminConfirmSignUp({
     UserPoolId: COGNITO_USER_POOL_ID,

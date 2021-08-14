@@ -8,9 +8,9 @@ import { Context } from 'aws-lambda'
 import { gql, GraphQLClient } from 'graphql-request'
 dotenv.config()
 
-const { AWS_REGION, WEB_USER_POOL_CLIENT_ID, COGNITO_USER_POOL_ID, APP_SYNC_API_URL } = process.env
+const { AWS_REGION, WEB_USER_POOL_CLIENT_ID, COGNITO_USER_POOL_ID, API_URL } = process.env
 const cognito = new CognitoIdentityProvider({})
-const graphQLClient = new GraphQLClient(APP_SYNC_API_URL)
+const graphQLClient = new GraphQLClient(API_URL)
 
 export interface ICognitoUser {
   id: string
@@ -78,17 +78,18 @@ export async function we_invoke_create_book(
 
 export async function a_user_calls_create_book(user: IAuthenticatedUser, title: string, description: string): Promise<Book> {
   const mutation = gql`
-    mutation CreateBook($title: String!, $description: String!){
-      createBook(input: {title: $title, $description: $description}){
-        id,
-        title,
-        description,
-        createdAt,
-        createdBy,
-        UpdatedAt,
-        UpdatedBy
+    mutation CreateBook($title: String!, $description: String!) {
+      createBook(input: { title: $title, description: $description }) {
+        id
+        title
+        description
+        createdAt
+        createdBy
+        updatedAt
+        updatedBy
       }
-    }`
+    }
+  `
 
   const variables: CreateBookInput = {
     title: title,

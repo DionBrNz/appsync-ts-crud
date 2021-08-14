@@ -11,7 +11,7 @@ mappingTemplates:
     dataSource: createBookSource
     field: createBook
     request: false
-    response: response-mapping-template.vtl
+    response: false
 
 dataSources:
   - type: AWS_LAMBDA

@@ -68,7 +68,7 @@ resources:
             Value: ${self:custom.stage}
           - Key: Name
             Value: users-table
-    
+
     BooksTable:
       Type: AWS::DynamoDB::Table
       Properties:

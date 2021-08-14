@@ -26,10 +26,6 @@ input ListBooksInput {
 input CreateBookInput {
   title: String!
   description: String!
-  createdAt: AWSDateTime!
-  createdBy: ID!
-  updatedAt: AWSDateTime!
-  updatedBy: ID!
 }
 
 input UpdateBookInput {
@@ -45,6 +41,11 @@ input DeleteBookInput {
 type Book {
   id: ID!
   title: String!
+  description: String!
+  createdBy: ID!
+  createdAt: AWSDateTime!
+  updatedBy: ID!
+  updatedAt: AWSDateTime!
 }
 
 type ListBooksResult {
