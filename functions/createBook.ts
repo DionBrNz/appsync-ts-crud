@@ -17,35 +17,40 @@ export type CreateBookInput = {
 }
 
 export async function handler(event: AppSyncEvent<CreateBookInput>, contex: Context): Promise<AppSyncResult<Book>> {
-  logger.withRequest(event, contex)
-  logger.info('Starting')
+  try {
+    logger.withRequest(event, contex)
+    logger.info('Starting')
 
-  const { title, description } = event.arguments.input
-  const now = new Date().toISOString()
+    const { title, description } = event.arguments.input
+    const now = new Date().toISOString()
 
-  const book: Book = {
-    id: ulid(),
-    title: title,
-    description: description,
-    createdAt: now,
-    updatedAt: now,
-    createdBy: event.identity.sub,
-    updatedBy: event.identity.sub
-  }
+    const book: Book = {
+      id: ulid(),
+      title: title,
+      description: description,
+      createdAt: now,
+      updatedAt: now,
+      createdBy: event.identity.sub,
+      updatedBy: event.identity.sub
+    }
 
-  logger.info('Saving book')
+    logger.info('Saving book')
 
-  await dynamoDocument.put({
-    TableName: BOOKS_TABLE_NAME,
-    Item: book
-  })
+    await dynamoDocument.put({
+      TableName: BOOKS_TABLE_NAME,
+      Item: book
+    })
 
-  logger.info('Book saved')
+    logger.info('Book saved')
 
-  return {
-    data: book,
-    errorInfo: null,
-    errorMessage: null,
-    errorType: null
+    return {
+      data: book,
+      errorInfo: null,
+      errorMessage: null,
+      errorType: null
+    }
+  } catch (error) {
+    logger.error({ error }, error.name)
+    throw error
   }
 }
