@@ -23,10 +23,10 @@ export async function handler(event: AppSyncEvent<UpdateBookInput>, contex: Cont
     const { id, title, description } = event.arguments.input
     const userId = event.identity.sub
     try {
-      const { Attributes: item } = dynamoDocument.update({
+      const { Attributes: item } = await dynamoDocument.update({
         TableName: BOOKS_TABLE_NAME,
         Key: { id: id },
-        UpdateExpression: 'set #title = :title, #description =: description, #updatedAt = :updatedAt, #updatedBy = :updatedBy',
+        UpdateExpression: 'set #title = :title, #description = :description, #updatedAt = :updatedAt, #updatedBy = :updatedBy',
         ConditionExpression: 'attribute_exists(id)',
         ExpressionAttributeValues: {
           ':title': title,

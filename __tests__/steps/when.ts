@@ -1,6 +1,7 @@
 import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provider'
 import { IAuthenticatedUser } from './given'
 import { CreateBookInput, handler as createBook } from '../../functions/createBook'
+import { UpdateBookInput, handler as updateBook } from '../../functions/updateBook'
 import { Book } from '../../lib/entities'
 import { AppSyncEvent, AppSyncResult } from '../../lib/appsync'
 import * as dotenv from 'dotenv'
@@ -55,25 +56,32 @@ export async function we_invoke_create_book(
     }
   }
 
-  const context: Context = {
-    functionName: 'test',
-    callbackWaitsForEmptyEventLoop: false,
-    functionVersion: '1',
-    invokedFunctionArn: 'arn',
-    memoryLimitInMB: '128MB',
-    awsRequestId: '123',
-    logGroupName: 'logGroup',
-    logStreamName: 'streamName',
-    identity: undefined,
-    clientContext: undefined,
-    getRemainingTimeInMillis: function () {
-      return 100
-    },
-    done: function (error?: Error, result?: any) {},
-    fail: function (error: Error | string) {},
-    succeed: function (messageOrObject: any) {}
-  }
+  const context = getTestContext()
   return await createBook(event, context)
+}
+
+export async function we_invokde_update_book(
+  user: IAuthenticatedUser,
+  bookId: string,
+  title: string,
+  description: string
+): Promise<AppSyncResult<Book>> {
+  const event: AppSyncEvent<UpdateBookInput> = {
+    arguments: {
+      input: {
+        id: bookId,
+        title: title,
+        description: description
+      }
+    },
+    identity: {
+      sub: user.id,
+      email: user.email
+    }
+  }
+
+  const context = getTestContext()
+  return await updateBook(event, context)
 }
 
 export async function a_user_calls_create_book(user: IAuthenticatedUser, title: string, description: string): Promise<Book> {
@@ -102,4 +110,25 @@ export async function a_user_calls_create_book(user: IAuthenticatedUser, title: 
 
   const data = await graphQLClient.request(mutation, variables, headers)
   return data.createBook
+}
+
+function getTestContext(): Context {
+  return {
+    functionName: 'test',
+    callbackWaitsForEmptyEventLoop: false,
+    functionVersion: '1',
+    invokedFunctionArn: 'arn',
+    memoryLimitInMB: '128MB',
+    awsRequestId: '123',
+    logGroupName: 'logGroup',
+    logStreamName: 'streamName',
+    identity: undefined,
+    clientContext: undefined,
+    getRemainingTimeInMillis: function () {
+      return 100
+    },
+    done: function (error?: Error, result?: any) {},
+    fail: function (error: Error | string) {},
+    succeed: function (messageOrObject: any) {}
+  }
 }
