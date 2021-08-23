@@ -4,6 +4,7 @@ import * as given from '../../steps/given'
 import * as when from '../../steps/when'
 import * as then from '../../steps/then'
 import { dateRegex } from '../../../lib/consts'
+import { ulid } from 'ulid'
 
 const chance = new Chance()
 
@@ -28,6 +29,15 @@ describe('Give an anuthenticated user has already created a book', () => {
     beforeAll(async () => {
       const { data } = await when.we_invokde_update_book(user, existingBook.id, title, description)
       updatedBook = data!
+    }, 10000)
+
+    it('Returns an error when the book is not found', async () => {
+      const badBookId = ulid()
+      const{data, errorMessage, errorType, errorInfo} = await when.we_invokde_update_book(user, badBookId, title, description)
+      expect(data).toBeNull
+      expect(errorType).toBe("NotFound")
+      expect(errorMessage).toBe("Book not found")
+      expect(errorInfo).toMatchObject({bookId: badBookId})
     })
 
     it('Updates the book in the dynamodb table', async () => {

@@ -3,7 +3,7 @@ import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import lambdaLogger from 'pino-lambda'
 import { Book } from '../lib/entities'
 import { Context } from 'aws-lambda'
-import { AppSyncEvent, AppSyncResult } from '../lib/appsync'
+import { AppSyncEvent, AppSyncResult, AppSyncError } from '../lib/appsync'
 
 const { BOOKS_TABLE_NAME } = process.env
 const dynamoClient = new DynamoDBClient({})
@@ -53,17 +53,20 @@ export async function handler(event: AppSyncEvent<UpdateBookInput>, contex: Cont
       }
     } catch (error) {
       if (error.name == 'ConditionalCheckFailedException') {
-        throw new Error('Post not found')
+        throw new AppSyncError('Book not found', 'NotFound', { bookId: id })
       }
       throw error
     }
   } catch (error) {
     logger.error({ error }, error.name)
-    return {
-      data: error,
-      errorInfo: null,
-      errorMessage: null,
-      errorType: null
+    if (error instanceof AppSyncError){
+      return {
+        data: null,
+        errorInfo: error.info,
+        errorMessage: error.message,
+        errorType: error.type
+      }
     }
+    throw error
   }
 }
