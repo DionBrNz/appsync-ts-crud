@@ -27,5 +27,24 @@ describe('Given an authenticated user', () => {
         updatedBy: user.id
       })
     })
+
+    describe('When they update the post', () => {
+      let updatedBook: Book
+      const updatedTitle = chance.sentence({ words: 5 })
+      const updatedDescription = chance.paragraph()
+
+      beforeAll(async () => {
+        updatedBook = await when.a_user_calls_update_book(user, book.id, updatedTitle, updatedDescription)
+      })
+
+      it('Should return the updated book', () => {
+        expect(book).toMatchObject({
+          title: updatedTitle,
+          description: updatedDescription,
+          createdBy: user.id,
+          updatedBy: user.id
+        })
+      })
+    })
   })
 })
