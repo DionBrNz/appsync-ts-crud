@@ -27,17 +27,17 @@ describe('Give an anuthenticated user has already created a book', () => {
     const description = chance.paragraph()
 
     beforeAll(async () => {
-      const { data } = await when.we_invokde_update_book(user, existingBook.id, title, description)
+      const { data } = await when.we_invoke_update_book(user, existingBook.id, title, description)
       updatedBook = data!
     }, 10000)
 
     it('Returns an error when the book is not found', async () => {
       const badBookId = ulid()
-      const{data, errorMessage, errorType, errorInfo} = await when.we_invokde_update_book(user, badBookId, title, description)
+      const { data, errorMessage, errorType, errorInfo } = await when.we_invoke_update_book(user, badBookId, title, description)
       expect(data).toBeNull
-      expect(errorType).toBe("NotFound")
-      expect(errorMessage).toBe("Book not found")
-      expect(errorInfo).toMatchObject({bookId: badBookId})
+      expect(errorType).toBe('NotFound')
+      expect(errorMessage).toBe('Book not found')
+      expect(errorInfo).toMatchObject({ bookId: badBookId })
     })
 
     it('Updates the book in the dynamodb table', async () => {

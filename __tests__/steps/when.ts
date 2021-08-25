@@ -60,7 +60,7 @@ export async function we_invoke_create_book(
   return await createBook(event, context)
 }
 
-export async function we_invokde_update_book(
+export async function we_invoke_update_book(
   user: IAuthenticatedUser,
   bookId: string,
   title: string,
@@ -110,6 +110,40 @@ export async function a_user_calls_create_book(user: IAuthenticatedUser, title: 
 
   const data = await graphQLClient.request(mutation, variables, headers)
   return data.createBook
+}
+
+export async function a_user_calls_update_book(
+  user: IAuthenticatedUser,
+  bookId: string,
+  title: string,
+  description: string
+): Promise<Book> {
+  const mutation = gql`
+    mutation UpdateBook($id: String!, $title: String!, $description: String!) {
+      updateBook(input: { id: $id, title: $title, description: $description }) {
+        id
+        title
+        description
+        createdAt
+        createdBy
+        updatedAt
+        updatedBy
+      }
+    }
+  `
+
+  const variables: UpdateBookInput = {
+    id: bookId,
+    title: title,
+    description: description
+  }
+
+  const headers = {
+    authorization: user.idToken
+  }
+
+  const data = await graphQLClient.request(mutation, variables, headers)
+  return data.updateBook
 }
 
 function getTestContext(): Context {
