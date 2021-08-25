@@ -51,10 +51,7 @@ export async function we_invoke_create_book(
         description: description
       }
     },
-    identity: {
-      sub: user.id,
-      email: user.email
-    }
+    identity: getIdentity(user)
   }
 
   const context = getTestContext()
@@ -75,10 +72,7 @@ export async function we_invoke_update_book(
         description: description
       }
     },
-    identity: {
-      sub: user.id,
-      email: user.email
-    }
+    identity: getIdentity(user)
   }
 
   const context = getTestContext()
@@ -92,10 +86,7 @@ export async function we_invokde_get_book(user: IAuthenticatedUser, bookId: stri
         id: bookId
       }
     },
-    identity: {
-      sub: user.id,
-      email: user.email
-    }
+    identity: getIdentity(user)
   }
 
   const context = getTestContext()
@@ -182,5 +173,12 @@ function getTestContext(): Context {
     done: function (error?: Error, result?: any) {},
     fail: function (error: Error | string) {},
     succeed: function (messageOrObject: any) {}
+  }
+}
+
+function getIdentity(user: IAuthenticatedUser) {
+  return {
+    sub: user.id,
+    email: user.email
   }
 }
