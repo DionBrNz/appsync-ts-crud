@@ -60,6 +60,15 @@ functions:
         Action: 'dynamodb:UpdateItem'
         Resource: !GetAtt BooksTable.Arn
 
+  getBook:
+    handler: functions/getBook.handler
+    environment:
+      BOOKS_TABLE_NAME: !Ref BooksTable
+    iamRoleStatements:
+      - Effect: Allow
+        Action: 'dynamodb:GetItem'
+        Resource: !GetAtt BooksTable.Arn
+
 resources:
   Resources:
     UsersTable:
