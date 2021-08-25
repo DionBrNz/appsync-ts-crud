@@ -38,7 +38,7 @@ describe('Given an authenticated user', () => {
       })
 
       it('Should return the updated book', () => {
-        expect(book).toMatchObject({
+        expect(updatedBook).toMatchObject({
           title: updatedTitle,
           description: updatedDescription,
           createdBy: user.id,

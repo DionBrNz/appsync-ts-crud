@@ -119,7 +119,7 @@ export async function a_user_calls_update_book(
   description: string
 ): Promise<Book> {
   const mutation = gql`
-    mutation UpdateBook($id: String!, $title: String!, $description: String!) {
+    mutation UpdateBook($id: ID!, $title: String!, $description: String!) {
       updateBook(input: { id: $id, title: $title, description: $description }) {
         id
         title
