@@ -28,32 +28,43 @@ describe('Given an authenticated user', () => {
       })
     })
 
-    describe('When they update the book', () => {
-      let updatedBook: Book
-      const updatedTitle = chance.sentence({ words: 5 })
-      const updatedDescription = chance.paragraph()
-
+    describe('When they get the book', () => {
+      let gotBook: Book
       beforeAll(async () => {
-        updatedBook = await when.a_user_calls_update_book(user, book.id, updatedTitle, updatedDescription)
+        gotBook = await when.a_user_calls_get_book(user, book.id)
       })
 
-      it('Should return the updated book', () => {
-        expect(updatedBook).toMatchObject({
-          title: updatedTitle,
-          description: updatedDescription,
-          createdBy: user.id,
-          updatedBy: user.id
-        })
+      it('Should match the created book', () => {
+        expect(gotBook).toMatchObject(book)
       })
 
-      describe('When they delete the book', () => {
-        let deletedBook: Book
+      describe('When they update the book', () => {
+        let updatedBook: Book
+        const updatedTitle = chance.sentence({ words: 5 })
+        const updatedDescription = chance.paragraph()
+
         beforeAll(async () => {
-          deletedBook = await when.a_user_calls_delete_book(user, book.id)
+          updatedBook = await when.a_user_calls_update_book(user, book.id, updatedTitle, updatedDescription)
         })
 
-        it('Should return the deleted book', () => {
-          expect(deletedBook).toMatchObject(updatedBook)
+        it('Should return the updated book', () => {
+          expect(updatedBook).toMatchObject({
+            title: updatedTitle,
+            description: updatedDescription,
+            createdBy: user.id,
+            updatedBy: user.id
+          })
+        })
+
+        describe('When they delete the book', () => {
+          let deletedBook: Book
+          beforeAll(async () => {
+            deletedBook = await when.a_user_calls_delete_book(user, book.id)
+          })
+
+          it('Should return the deleted book', () => {
+            expect(deletedBook).toMatchObject(updatedBook)
+          })
         })
       })
     })
