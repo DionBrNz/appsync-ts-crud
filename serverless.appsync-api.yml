@@ -17,6 +17,10 @@ mappingTemplates:
     field: updateBook
     request: false
     response: response-mapping-template.vtl
+  - type: Mutation
+    datasource: deleteBookDatasource
+    field: deleteBook
+    request: false
 
   # Queries
   - type: Query

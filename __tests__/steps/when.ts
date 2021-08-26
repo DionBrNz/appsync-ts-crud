@@ -2,6 +2,7 @@ import { CognitoIdentityProvider } from '@aws-sdk/client-cognito-identity-provid
 import { IAuthenticatedUser } from './given'
 import { CreateBookInput, handler as createBook } from '../../functions/createBook'
 import { UpdateBookInput, handler as updateBook } from '../../functions/updateBook'
+import { DeleteBookInput, handler as deleteBook } from '../../functions/deleteBook'
 import { GetBookInput, handler as getBook } from '../../functions/getBook'
 import { Book } from '../../lib/entities'
 import { AppSyncEvent, AppSyncResult } from '../../lib/appsync'
@@ -77,6 +78,20 @@ export async function we_invoke_update_book(
 
   const context = getTestContext()
   return await updateBook(event, context)
+}
+
+export async function we_invoke_delete_book(user: IAuthenticatedUser, bookId: string): Promise<AppSyncResult<Book>> {
+  const event: AppSyncEvent<DeleteBookInput> = {
+    arguments: {
+      input: {
+        id: bookId
+      }
+    },
+    identity: getIdentity(user)
+  }
+
+  const context = getTestContext()
+  return await deleteBook(event, context)
 }
 
 export async function we_invokde_get_book(user: IAuthenticatedUser, bookId: string): Promise<AppSyncResult<Book>> {

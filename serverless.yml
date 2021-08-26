@@ -69,6 +69,15 @@ functions:
         Action: 'dynamodb:GetItem'
         Resource: !GetAtt BooksTable.Arn
 
+  deleteBook:
+    handler: functions/getDelete.handler
+    environment:
+      BOOKS_TABLE_NAME: !Ref BooksTable
+    iamRoleStatements:
+      - Effect: Allow
+        Action: 'dynamodb:DeleteItem'
+        Resource: !GetAtt BooksTable.Arn
+
 resources:
   Resources:
     UsersTable:
