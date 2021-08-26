@@ -16,9 +16,9 @@ export type CreateBookInput = {
   description: string
 }
 
-export async function handler(event: AppSyncEvent<CreateBookInput>, contex: Context): Promise<AppSyncResult<Book>> {
+export async function handler(event: AppSyncEvent<CreateBookInput>, context: Context): Promise<AppSyncResult<Book>> {
   try {
-    logger.withRequest(event, contex)
+    logger.withRequest(event, context)
     logger.info('Starting')
 
     const { title, description } = event.arguments.input

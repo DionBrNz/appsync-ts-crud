@@ -16,9 +16,9 @@ export type UpdateBookInput = {
   description: string
 }
 
-export async function handler(event: AppSyncEvent<UpdateBookInput>, contex: Context): Promise<AppSyncResult<Book>> {
+export async function handler(event: AppSyncEvent<UpdateBookInput>, context: Context): Promise<AppSyncResult<Book>> {
   try {
-    logger.withRequest(event, contex)
+    logger.withRequest(event, context)
 
     const { id, title, description } = event.arguments.input
     const userId = event.identity.sub
@@ -59,7 +59,7 @@ export async function handler(event: AppSyncEvent<UpdateBookInput>, contex: Cont
     }
   } catch (error) {
     logger.error({ error }, error.name)
-    if (error instanceof AppSyncError){
+    if (error instanceof AppSyncError) {
       return {
         data: null,
         errorInfo: error.info,

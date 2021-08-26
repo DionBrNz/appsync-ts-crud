@@ -15,9 +15,9 @@ export type GetBookInput = {
   id: string
 }
 
-export async function handler(event: AppSyncEvent<GetBookInput>, contex: Context): Promise<AppSyncResult<Book>> {
+export async function handler(event: AppSyncEvent<GetBookInput>, context: Context): Promise<AppSyncResult<Book>> {
   try {
-    logger.withRequest(event, contex)
+    logger.withRequest(event, context)
     logger.info('Starting - Getting book')
 
     const { id } = event.arguments.input
