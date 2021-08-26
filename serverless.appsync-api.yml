@@ -18,9 +18,10 @@ mappingTemplates:
     request: false
     response: response-mapping-template.vtl
   - type: Mutation
-    datasource: deleteBookDatasource
+    dataSource: deleteBookSource
     field: deleteBook
     request: false
+    response: response-mapping-template.vtl
 
   # Queries
   - type: Query
@@ -42,3 +43,7 @@ dataSources:
     name: getBookSource
     config:
       functionName: getBook
+  - type: AWS_LAMBDA
+    name: deleteBookSource
+    config:
+      functionName: deleteBook

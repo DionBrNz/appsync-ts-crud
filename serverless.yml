@@ -70,7 +70,7 @@ functions:
         Resource: !GetAtt BooksTable.Arn
 
   deleteBook:
-    handler: functions/getDelete.handler
+    handler: functions/deleteBook.handler
     environment:
       BOOKS_TABLE_NAME: !Ref BooksTable
     iamRoleStatements:
