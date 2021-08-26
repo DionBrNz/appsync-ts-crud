@@ -170,6 +170,33 @@ export async function a_user_calls_update_book(
   return data.updateBook
 }
 
+export async function a_user_calls_delete_book(user: IAuthenticatedUser, bookId: string): Promise<Book> {
+  const mutation = gql`
+    mutation DeleteBook($id: ID!) {
+      deleteBook(input: { id: $id }) {
+        id
+        title
+        description
+        createdAt
+        createdBy
+        updatedAt
+        updatedBy
+      }
+    }
+  `
+
+  const variables: DeleteBookInput = {
+    id: bookId
+  }
+
+  const headers = {
+    authorization: user.idToken
+  }
+
+  const data = await graphQLClient.request(mutation, variables, headers)
+  return data.deleteBook
+}
+
 function getTestContext(): Context {
   return {
     functionName: 'test',

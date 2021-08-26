@@ -28,7 +28,7 @@ describe('Given an authenticated user', () => {
       })
     })
 
-    describe('When they update the post', () => {
+    describe('When they update the book', () => {
       let updatedBook: Book
       const updatedTitle = chance.sentence({ words: 5 })
       const updatedDescription = chance.paragraph()
@@ -43,6 +43,17 @@ describe('Given an authenticated user', () => {
           description: updatedDescription,
           createdBy: user.id,
           updatedBy: user.id
+        })
+      })
+
+      describe('When they delete the book', () => {
+        let deletedBook: Book
+        beforeAll(async () => {
+          deletedBook = await when.a_user_calls_delete_book(user, book.id)
+        })
+
+        it('Should return the deleted book', () => {
+          expect(deletedBook).toMatchObject(updatedBook)
         })
       })
     })
