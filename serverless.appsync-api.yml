@@ -29,6 +29,11 @@ mappingTemplates:
     field: getBook
     request: false
     response: response-mapping-template.vtl
+  - type: Query
+    dataSource: listBooksSource
+    field: listBooks
+    request: false
+    response: response-mapping-template.vtl
 
 dataSources:
   - type: AWS_LAMBDA
@@ -47,3 +52,7 @@ dataSources:
     name: deleteBookSource
     config:
       functionName: deleteBook
+  - type: AWS_LAMBDA
+    name: listBooksSource
+    config:
+      functionName: listBooks
