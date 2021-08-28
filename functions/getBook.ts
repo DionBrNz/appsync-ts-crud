@@ -1,6 +1,5 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
-import { ulid } from 'ulid'
 import { Book } from '../lib/entities'
 import { AppSyncError, AppSyncEvent, AppSyncResult } from '../lib/appsync'
 import lambdaLogger from 'pino-lambda'
