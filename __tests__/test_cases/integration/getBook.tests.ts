@@ -20,14 +20,14 @@ describe('Given an authenticated user and a existing book', () => {
 
   describe('When they get a book', () => {
     it('Returns the correct book from dynamodb', async () => {
-      const { data } = await when.we_invokde_get_book(user, existingBook.id)
+      const { data } = await when.we_invoke_get_book(user, existingBook.id)
       const book: Book = data!
       expect(book).toMatchObject<Book>(existingBook)
     })
 
     it('Returns an error when the book is not found', async () => {
       const badBookId = ulid()
-      const { data, errorMessage, errorType, errorInfo } = await when.we_invokde_get_book(user, badBookId)
+      const { data, errorMessage, errorType, errorInfo } = await when.we_invoke_get_book(user, badBookId)
       expect(data).toBeNull
       expect(errorType).toBe('NotFound')
       expect(errorMessage).toBe('Book not found')
