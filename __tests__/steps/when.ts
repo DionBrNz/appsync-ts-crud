@@ -3,6 +3,7 @@ import { IAuthenticatedUser } from './given'
 import { CreateBookInput, handler as createBook } from '../../functions/createBook'
 import { UpdateBookInput, handler as updateBook } from '../../functions/updateBook'
 import { DeleteBookInput, handler as deleteBook } from '../../functions/deleteBook'
+import { ListBooksInput, ListBooksResult, handler as listBooks } from '../../functions/listBooks'
 import { GetBookInput, handler as getBook } from '../../functions/getBook'
 import { Book } from '../../lib/entities'
 import { AppSyncEvent, AppSyncResult } from '../../lib/appsync'
@@ -94,7 +95,7 @@ export async function we_invoke_delete_book(user: IAuthenticatedUser, bookId: st
   return await deleteBook(event, context)
 }
 
-export async function we_invokde_get_book(user: IAuthenticatedUser, bookId: string): Promise<AppSyncResult<Book>> {
+export async function we_invoke_get_book(user: IAuthenticatedUser, bookId: string): Promise<AppSyncResult<Book>> {
   const event: AppSyncEvent<GetBookInput> = {
     arguments: {
       input: {
@@ -106,6 +107,26 @@ export async function we_invokde_get_book(user: IAuthenticatedUser, bookId: stri
 
   const context = getTestContext()
   return await getBook(event, context)
+}
+
+export async function we_invoke_list_books(
+  user: IAuthenticatedUser,
+  limit: number,
+  nextToken: string | null
+): Promise<AppSyncResult<ListBooksResult>> {
+  const event: AppSyncEvent<ListBooksInput> = {
+    arguments: {
+      input: {
+        limit: limit,
+        nextToken: nextToken
+      }
+    },
+    identity: getIdentity(user)
+  }
+
+  const context = getTestContext()
+
+  return await listBooks(event, context)
 }
 
 export async function a_user_calls_create_book(user: IAuthenticatedUser, title: string, description: string): Promise<Book> {
